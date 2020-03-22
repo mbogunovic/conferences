@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.conferences.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:name="com.conferences.fragments.ConferencesFragment"
+        android:label="@string/conferences_label"
+        tools:layout="@layout/conferences">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.conferences.SecondFragment"
+        android:name="com.conferences.fragments.ConferenceDetailsFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/conference_details">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

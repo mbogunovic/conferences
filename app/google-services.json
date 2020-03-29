@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "202239811587",
+    "firebase_url": "https://konferencije-b13d7.firebaseio.com",
+    "project_id": "konferencije-b13d7",
+    "storage_bucket": "konferencije-b13d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202239811587:android:1af806ee60835658c42e36",
+        "android_client_info": {
+          "package_name": "com.conferences"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202239811587-j25nb0orq8gd72me18sldlscfsprmrl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.conferences",
+            "certificate_hash": "dc8ce22b4ad91c7ed194c54d2da52fb1410cfbe5"
+          }
+        },
+        {
+          "client_id": "202239811587-f5kkau8qgmc344j0kn4l4kk4v6f3vdqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB66vQeNtCQx86fgR6eQK04PiMMzH_Y3vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202239811587-f5kkau8qgmc344j0kn4l4kk4v6f3vdqa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

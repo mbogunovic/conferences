@@ -3,9 +3,20 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="conferences_label">Konferencije</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="conference_details_label">Detalji konferencije</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- Actions -->
+    <string name="action_confirm">Potvrdi</string>
+
+    <!-- Strings used for conference_add -->
+    <string name="placeholder_conference_title">Naziv konferencije*</string>
+    <string name="placeholder_conference_description">Opis konferencije*</string>
+
+    <!-- Strings used for validation -->
+    <string name="validation_mandatory">Ovo polje mora imati vrednost.</string>
+
+    <!-- Strings used for confirmation messages -->
+    <string name="confirmation_conference_added">Konferencija je uspešno kreirana.</string>
 </resources>

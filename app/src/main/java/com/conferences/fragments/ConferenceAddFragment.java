@@ -17,52 +17,41 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.conferences.R;
+import com.conferences.helpers.EditTextHelper;
 import com.conferences.models.Conference;
+import com.conferences.providers.ConferencesProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ConferenceAddFragment extends Fragment {
     EditText title, description;
+    Button addButton;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        return inflater.inflate(R.layout.conference_add, container, false);
+        ViewGroup root = (ViewGroup)inflater.inflate(R.layout.conference_add, container, false);
+
+        title = root.findViewById(R.id.input_conference_title);
+        description = root.findViewById(R.id.input_conference_description);
+        addButton = root.findViewById(R.id.button_add);
+
+        return root;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        title = view.findViewById(R.id.input_conference_title);
-        description = view.findViewById(R.id.input_conference_description);
-        Button buttonAdd = view.findViewById(R.id.button_add);
+        addButton.setOnClickListener(cView -> {
+            if(EditTextHelper.CheckMandatoryText(title, cView) && EditTextHelper.CheckMandatoryText(description, cView)){
+                ConferencesProvider.AddConference(title.getText().toString(), description.getText().toString());
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isValid = true;
+                NavHostFragment.findNavController(ConferenceAddFragment.this)
+                        .navigate(ConferenceAddFragmentDirections.actionConferenceAddFragmentToConferencesFragment());
 
-                if (title.getText().toString().length() == 0) {
-                    title.setError(view.getResources().getString(R.string.validation_mandatory));
-                    isValid = false;
-                }
-                if (description.getText().toString().length() == 0) {
-                    description.setError(view.getResources().getString(R.string.validation_mandatory));
-                    isValid = false;
-                }
-
-                if (isValid) {
-
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-                    String key = mDatabase.child("conferences").push().getKey();
-                    mDatabase.child("conferences").child(key).setValue(new Conference(title.getText().toString(), description.getText().toString()));
-                    NavHostFragment.findNavController(ConferenceAddFragment.this)
-                            .navigate(ConferenceAddFragmentDirections.actionConferenceAddFragmentToConferencesFragment());
-                    Toast.makeText(view.getContext(), view.getResources().getString(R.string.confirmation_conference_added), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(cView.getContext(), cView.getResources().getString(R.string.confirmation_conference_added), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,8 +1,6 @@
 package com.conferences.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +12,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.conferences.R;
 import com.conferences.adapters.ConferencesListAdapter;
-import com.conferences.models.Conference;
+import com.conferences.providers.ConferencesProvider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class ConferencesFragment extends Fragment {
 
     ListView listView;
+    FloatingActionButton addButton;
 
     @Override
     public View onCreateView(
@@ -35,43 +27,22 @@ public class ConferencesFragment extends Fragment {
     ) {
         ViewGroup root =  (ViewGroup)inflater.inflate(R.layout.conferences, container, false);
         listView = root.findViewById(R.id.lv_conferences);
-        FloatingActionButton addButton = root.findViewById(R.id.fab_conference_add);
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    NavHostFragment.findNavController(ConferencesFragment.this)
-                            .navigate(ConferencesFragmentDirections.actionConferencesFragmentToConferenceAddFragment());
-                }
-        });
-
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mDatabase.child("conferences").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Conference> conferenceList = new ArrayList<Conference>();
-
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    Conference post = postSnapshot.getValue(Conference.class);
-                    post.setId(postSnapshot.getKey());
-                    conferenceList.add(post);
-                }
-
-                ConferencesListAdapter adapter = new ConferencesListAdapter(getActivity(), conferenceList, ConferencesFragment.this);
-                listView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        addButton = root.findViewById(R.id.fab_conference_add);
+        ConferencesProvider.GetAllConferences(conferenceList ->
+                listView.setAdapter(new ConferencesListAdapter(getActivity(), conferenceList, ConferencesFragment.this)));
 
         return root;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ConferencesFragment.this)
+                        .navigate(ConferencesFragmentDirections.actionConferencesFragmentToConferenceAddFragment());
+            }
+        });
     }
 }

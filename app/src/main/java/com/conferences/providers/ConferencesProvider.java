@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class ConferencesProvider {
-    public static void GetAllConferences(final Consumer<ArrayList<Conference>> ideGas){
+    public static void GetAllConferences(final Consumer<ArrayList<Conference>> consumeResult) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        final Consumer<ArrayList<Conference>> idegas2 = ideGas;
 
         mDatabase.child("conferences").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -26,13 +25,13 @@ public class ConferencesProvider {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Conference> conferenceList = new ArrayList<Conference>();
 
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Conference post = postSnapshot.getValue(Conference.class);
                     post.setId(postSnapshot.getKey());
                     conferenceList.add(post);
                 }
 
-                ideGas.accept(conferenceList);
+                consumeResult.accept(conferenceList);
             }
 
             @Override
@@ -42,7 +41,7 @@ public class ConferencesProvider {
         });
     }
 
-    public static Conference AddConference(String title, String description){
+    public static Conference AddConference(String title, String description) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Conference conference = new Conference(title, description);
 
@@ -50,5 +49,23 @@ public class ConferencesProvider {
         mDatabase.child("conferences").child(conference.getId()).setValue(conference);
 
         return conference;
+    }
+
+    public static void GetById(String conferenceId, final Consumer<Conference> consumeResult) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("conferences").child(conferenceId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        consumeResult.accept(snapshot.getValue(Conference.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

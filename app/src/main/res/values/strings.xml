@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Konferencije</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_register">Registruj se</string>
+    <string name="action_login">Prijavi se</string>
     <!-- Strings used for fragments for navigation -->
     <string name="conferences_label">Konferencije</string>
     <string name="conference_details_label">Detalji konferencije</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Napred</string>
+    <string name="previous">Nazad</string>
 
     <!-- Actions -->
     <string name="action_confirm">Potvrdi</string>
@@ -19,4 +20,8 @@
 
     <!-- Strings used for confirmation messages -->
     <string name="confirmation_conference_added">Konferencija je uspešno kreirana.</string>
+
+
+    <string name="placeholder_email">Email adresa*</string>
+    <string name="placeholder_password">Lozinka*</string>
 </resources>

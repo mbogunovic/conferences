@@ -22,7 +22,7 @@
     <!-- Strings used for confirmation messages -->
     <string name="confirmation_conference_added">Konferencija je uspešno kreirana.</string>
     <string name="confirmation_login">Uspešno ste se prijavili.</string>
-    <string name="confirmation_failed_login">Neuspešno prijavljivanje. Proverite kredencijale.</string>
+    <string name="confirmation_failed_login">Neuspešno prijavljivanje. Proverite unešene podatke i pokušajte ponovo.</string>
     <string name="confirmation_logout">Uspešno ste se odjavili.</string>
     <string name="confirmation_register">Uspešno ste se registrovali</string>
     <string name="confirmation_failed_register">Neuspešna registracija.</string>

@@ -19,7 +19,38 @@ public class ConferencesProvider {
     public static void GetAllConferences(final Consumer<ArrayList<Conference>> consumeResult) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("conferences").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("conferences")
+            .orderByChild("title")
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Conference> conferenceList = new ArrayList<Conference>();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Conference post = postSnapshot.getValue(Conference.class);
+                    post.setId(postSnapshot.getKey());
+                    conferenceList.add(post);
+                }
+
+                consumeResult.accept(conferenceList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void GetAllConferencesBy(String keyword, final Consumer<ArrayList<Conference>> consumeResult) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("conferences")
+                .orderByChild("title")
+                .startAt(keyword)
+                .endAt(keyword + "\uf8ff")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

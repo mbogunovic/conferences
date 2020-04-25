@@ -68,6 +68,13 @@
         android:name="com.conferences.fragments.EventAddFragment"
         android:label="Dodaj događaj"
         tools:layout="@layout/event_add">
+        <action
+            android:id="@+id/action_EventAddFragment_to_ConferenceDetailsFragment"
+            app:destination="@id/ConferenceDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="conferenceId"
             app:argType="string" />

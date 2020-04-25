@@ -19,9 +19,12 @@
     <!-- Strings used for event add -->
     <string name="placeholder_event_title">Naziv događaja*</string>
     <string name="placeholder_event_guests">Predavači*</string>
+    <string name="placeholder_event_start">Početak*</string>
+    <string name="placeholder_event_end">Kraj*</string>
 
     <!-- Strings used for validation -->
     <string name="validation_mandatory">Ovo polje mora imati vrednost.</string>
+    <string name="validation_date">Ovo polje mora imati validan datum.</string>
 
     <!-- Strings used for confirmation messages -->
     <string name="confirmation_conference_added">Konferencija je uspešno kreirana.</string>

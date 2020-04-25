@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.conferences.R;
 import com.conferences.helpers.EditTextHelper;
@@ -45,8 +46,6 @@ public class EventAddFragment extends Fragment {
         dtEnd = root.findViewById(R.id.input_event_end);
         dtEnd.setInputType(InputType.TYPE_NULL);
         addButton = root.findViewById(R.id.button_add);
-
-
 
         return root;
     }
@@ -98,8 +97,8 @@ public class EventAddFragment extends Fragment {
             && EditTextHelper.CheckMandatoryText(dtEnd, cView) && EditTextHelper.CheckDateText(dtEnd, cView)){
                 EventsProvider.AddEvent(title.getText().toString(), guests.getText().toString(), dtStart.getText().toString(), dtEnd.getText().toString(), conferenceId);
 
-                //NavHostFragment.findNavController(EventAddFragment.this)
-                //        .navigate(ConferenceAddFragmentDirections.actionConferenceAddFragmentToConferencesFragment());
+                NavHostFragment.findNavController(EventAddFragment.this)
+                        .navigate(EventAddFragmentDirections.actionEventAddFragmentToConferenceDetailsFragment(conferenceId));
 
                 Toast.makeText(cView.getContext(), cView.getResources().getString(R.string.confirmation_event_added), Toast.LENGTH_LONG).show();
             }

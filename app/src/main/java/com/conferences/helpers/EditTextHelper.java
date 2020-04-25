@@ -32,7 +32,7 @@ public class EditTextHelper {
         }
 
         if(isTextInvalid){
-            et.setError("Ovo polje mora imati validan datum.");
+            et.setError(view.getResources().getString(R.string.validation_date));
         }
         else{
             et.setError(null);

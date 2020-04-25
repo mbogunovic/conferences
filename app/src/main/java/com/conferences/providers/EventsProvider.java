@@ -37,6 +37,11 @@ public class EventsProvider {
         return event;
     }
 
+    public static void Delete(String id){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("events").child(id).removeValue();
+    }
+
     public static void GetAllEventsBy(String conferenceId, final Consumer<ArrayList<Event>> consumeResult) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 

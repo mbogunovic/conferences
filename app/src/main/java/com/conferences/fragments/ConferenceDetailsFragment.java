@@ -46,18 +46,16 @@ public class ConferenceDetailsFragment extends Fragment {
             {
                 setValues(c);
                 EventsProvider.GetAllEventsBy(c.getId(), eventList ->
-                        listView.setAdapter(new EventsListAdapter(getActivity(),eventList,ConferenceDetailsFragment.this)));
+                        listView.setAdapter(new EventsListAdapter(getActivity(), eventList, ConferenceDetailsFragment.this)));
             });
+        }
+
+        if (mAuth.getCurrentUser() == null) {
+            addButton.hide();
+        }
+
+        return root;
     }
-
-        if(mAuth.getCurrentUser()==null)
-
-    {
-        addButton.hide();
-    }
-
-     return root;
-}
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

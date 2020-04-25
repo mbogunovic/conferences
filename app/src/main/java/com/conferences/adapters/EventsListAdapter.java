@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.conferences.R;
+import com.conferences.fragments.ConferenceDetailsFragmentDirections;
 import com.conferences.fragments.ConferencesFragmentDirections;
 import com.conferences.listeners.OnClickIdListener;
 import com.conferences.models.Event;
@@ -26,7 +27,7 @@ public class EventsListAdapter extends ArrayAdapter<Event> {
     private TextView name;
     private TextView guests;
 
-    public EventsListAdapter(Context context, ArrayList<Event> events, Fragment currentFragment){
+    public EventsListAdapter(Context context, ArrayList<Event> events, Fragment currentFragment) {
         super(context, R.layout.event_block, R.id.cv_event_name, events);
 
         this.context = context;
@@ -37,7 +38,7 @@ public class EventsListAdapter extends ArrayAdapter<Event> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View eventBlock = layoutInflater.inflate(R.layout.event_block, parent, false);
 
         name = eventBlock.findViewById(R.id.cv_event_name);
@@ -45,13 +46,13 @@ public class EventsListAdapter extends ArrayAdapter<Event> {
         guests = eventBlock.findViewById(R.id.cv_event_guests);
         guests.setText(events.get(position).getGuests());
 
-        //eventBlock.findViewById(R.id.cv_conference).setOnClickListener(new OnClickIdListener(events.get(position).getId()) {
-         //   @Override
-         //   public void onClick(View view) {
-         //       NavHostFragment.findNavController(currentFragment)
-        //                .navigate(ConferencesFragmentDirections.actionConferencesFragmentToConferenceDetailsFragment(id));
-         //   }
-       // });
+        eventBlock.findViewById(R.id.cv_event).setOnClickListener(new OnClickIdListener(events.get(position).getId()) {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(currentFragment)
+                        .navigate(ConferenceDetailsFragmentDirections.actionConferencesDetailsFragmentToEventEditFragment(id));
+            }
+        });
 
         return eventBlock;
     }

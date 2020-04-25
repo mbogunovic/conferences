@@ -25,9 +25,13 @@ public class DatePickerFragment extends DialogFragment
     private Calendar c;
 
     static public DatePickerFragment newInstance(Calendar calendar) {
+        return newInstance(SimpleDateFormat.getDateTimeInstance().format(calendar.getTime()));
+    }
+
+    static public DatePickerFragment newInstance(String calendarDate) {
         DatePickerFragment f = new DatePickerFragment();
         Bundle args = new Bundle();
-        args.putString("calendar", SimpleDateFormat.getDateTimeInstance().format(calendar.getTime()));
+        args.putString("calendar", calendarDate);
         f.setArguments(args);
         return f;
     }

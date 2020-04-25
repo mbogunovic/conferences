@@ -48,6 +48,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_ConferencesDetailsFragment_to_EventEditFragment"
+            app:destination="@id/EventEditFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/ConferenceAddFragment"
@@ -77,6 +84,22 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="conferenceId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/EventEditFragment"
+        android:name="com.conferences.fragments.EventEditFragment"
+        android:label="Izmeni događaj"
+        tools:layout="@layout/event_edit">
+        <action
+            android:id="@+id/action_EventEditFragment_to_ConferenceDetailsFragment"
+            app:destination="@id/ConferenceDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="eventId"
             app:argType="string" />
     </fragment>
 </navigation>

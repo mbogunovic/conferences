@@ -17,11 +17,21 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class EventsProvider {
-    public static Event AddEvent(String title, String description, String start, String end, String conferenceId) {
+    public static Event AddEvent(String NAME, String description, String start, String end, String conferenceId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        Event event = new Event(title, description, start, end, conferenceId);
+        Event event = new Event(NAME, description, start, end, conferenceId);
 
         event.setId(mDatabase.child("events").push().getKey());
+        mDatabase.child("events").child(event.getId()).setValue(event);
+
+        return event;
+    }
+
+    public static Event EditEvent(String id, String name, String description, String start, String end, String conferenceId) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Event event = new Event(name, description, start, end, conferenceId);
+        event.setId(id);
+
         mDatabase.child("events").child(event.getId()).setValue(event);
 
         return event;
@@ -46,6 +56,26 @@ public class EventsProvider {
                         }
 
                         consumeResult.accept(eventList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public static void GetById(String eventId, final Consumer<Event> consumeResult) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("events").child(eventId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Event event = snapshot.getValue(Event.class);
+                        event.setId(eventId);
+                        consumeResult.accept(event);
                     }
 
                     @Override

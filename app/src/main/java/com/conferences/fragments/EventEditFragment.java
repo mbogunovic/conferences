@@ -16,45 +16,53 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.conferences.R;
 import com.conferences.helpers.EditTextHelper;
+import com.conferences.models.Event;
 import com.conferences.providers.EventsProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class EventAddFragment extends Fragment {
-    EditText title, guests, dtStart, dtEnd;
-    Button addButton;
+public class EventEditFragment extends Fragment {
+    EditText name, guests, dtStart, dtEnd;
+    Button editButton;
     Calendar cStart;
     Calendar cEnd;
-    String conferenceId;
+    Event event;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        ViewGroup root = (ViewGroup)inflater.inflate(R.layout.event_add, container, false);
-        if(getArguments() != null){
-            EventAddFragmentArgs args = EventAddFragmentArgs.fromBundle(getArguments());
-            conferenceId = args.getConferenceId();
-        }
-        title = root.findViewById(R.id.input_event_name);
+        ViewGroup root = (ViewGroup)inflater.inflate(R.layout.event_edit, container, false);
+
+        name = root.findViewById(R.id.input_event_name);
         guests = root.findViewById(R.id.input_event_guests);
         dtStart = root.findViewById((R.id.input_event_start));
         dtStart.setInputType(InputType.TYPE_NULL);
         dtEnd = root.findViewById(R.id.input_event_end);
         dtEnd.setInputType(InputType.TYPE_NULL);
-        addButton = root.findViewById(R.id.button_add);
+        editButton = root.findViewById(R.id.button_edit);
+
+        if (getArguments() != null) {
+            EventEditFragmentArgs args = EventEditFragmentArgs.fromBundle(getArguments());
+            EventsProvider.GetById(args.getEventId(), c -> setValues(c));
+        }
 
         return root;
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setValues(Event event) {
+        this.event = event;
+        name.setText(event.getName());
+        guests.setText(event.getGuests());
+        dtStart.setText(event.getStart());
+        dtEnd.setText(event.getEnd());
 
         dtStart.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                DialogFragment datePickerFragment = new DatePickerFragment().setOnDismiss((x) -> dtStart.clearFocus()).setOnDateSet((c) ->
+                DialogFragment datePickerFragment = DatePickerFragment.newInstance(event.getStart()).setOnDismiss((x) -> dtStart.clearFocus()).setOnDateSet((c) ->
                 {
                     cStart = c;
 
@@ -73,7 +81,7 @@ public class EventAddFragment extends Fragment {
 
         dtEnd.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                DialogFragment datePickerFragment = new DatePickerFragment().setOnDismiss((x) -> dtEnd.clearFocus()).setOnDateSet((c) ->
+                DialogFragment datePickerFragment = DatePickerFragment.newInstance(event.getEnd()).setOnDismiss((x) -> dtEnd.clearFocus()).setOnDateSet((c) ->
                 {
                     cEnd = c;
 
@@ -89,17 +97,21 @@ public class EventAddFragment extends Fragment {
                 datePickerFragment.show(getFragmentManager(), "datePicker");
             }
         });
+    }
+    
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        addButton.setOnClickListener(cView -> {
-            if(EditTextHelper.CheckMandatoryText(title, cView) && EditTextHelper.CheckMandatoryText(guests, cView)
+        editButton.setOnClickListener(cView -> {
+            if(EditTextHelper.CheckMandatoryText(name, cView) && EditTextHelper.CheckMandatoryText(guests, cView)
             && EditTextHelper.CheckMandatoryText(dtStart, cView) &&  EditTextHelper.CheckDateText(dtStart, cView)
             && EditTextHelper.CheckMandatoryText(dtEnd, cView) && EditTextHelper.CheckDateText(dtEnd, cView)){
-                EventsProvider.AddEvent(title.getText().toString(), guests.getText().toString(), dtStart.getText().toString(), dtEnd.getText().toString(), conferenceId);
+                EventsProvider.EditEvent(event.getId(), name.getText().toString(), guests.getText().toString(), dtStart.getText().toString(), dtEnd.getText().toString(), event.getConferenceId());
 
-                NavHostFragment.findNavController(EventAddFragment.this)
-                        .navigate(EventAddFragmentDirections.actionEventAddFragmentToConferenceDetailsFragment(conferenceId));
+                NavHostFragment.findNavController(EventEditFragment.this)
+                        .navigate(EventEditFragmentDirections.actionEventEditFragmentToConferenceDetailsFragment(event.getConferenceId()));
 
-                Toast.makeText(cView.getContext(), cView.getResources().getString(R.string.confirmation_event_added), Toast.LENGTH_LONG).show();
+                Toast.makeText(cView.getContext(), cView.getResources().getString(R.string.confirmation_event_edited), Toast.LENGTH_LONG).show();
             }
         });
     }

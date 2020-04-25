@@ -90,7 +90,9 @@ public class ConferencesProvider {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        consumeResult.accept(snapshot.getValue(Conference.class));
+                        Conference conference = snapshot.getValue(Conference.class);
+                        conference.setId(conferenceId);
+                        consumeResult.accept(conference);
                     }
 
                     @Override

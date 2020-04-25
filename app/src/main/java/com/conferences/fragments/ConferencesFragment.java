@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ConferencesFragment extends Fragment {
 
-    ListView listView;
-    FloatingActionButton addButton;
+    private ListView listView;
+    private FloatingActionButton addButton;
     private FirebaseAuth mAuth;
     private SearchView searchView;
 

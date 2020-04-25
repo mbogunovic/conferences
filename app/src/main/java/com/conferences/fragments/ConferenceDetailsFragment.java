@@ -13,10 +13,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.conferences.R;
 import com.conferences.models.Conference;
 import com.conferences.providers.ConferencesProvider;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ConferenceDetailsFragment extends Fragment {
-    Conference conference;
-    TextView title, description;
+    private Conference conference;
+    private TextView title, description;
+    private FloatingActionButton addButton;
 
     @Override
     public View onCreateView(
@@ -27,6 +29,8 @@ public class ConferenceDetailsFragment extends Fragment {
 
         title = root.findViewById(R.id.conference_details_title);
         description = root.findViewById(R.id.conference_details_description);
+        addButton = root.findViewById(R.id.fab_event_add);
+
         if(getArguments() != null){
             ConferenceDetailsFragmentArgs args = ConferenceDetailsFragmentArgs.fromBundle(getArguments());
             ConferencesProvider.GetById(args.getConferenceId(), c -> setValues(c));
@@ -41,6 +45,14 @@ public class ConferenceDetailsFragment extends Fragment {
         view.findViewById(R.id.button_back).setOnClickListener(cView ->
                 NavHostFragment.findNavController(ConferenceDetailsFragment.this)
                         .navigate(R.id.action_ConferenceDetailsFragment_to_ConferencesFragment));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ConferenceDetailsFragment.this)
+                        .navigate(ConferenceDetailsFragmentDirections.actionConferencesDetailsFragmentToEventAddFragment(conference.getId()));
+            }
+        });
     }
 
     public void setValues(Conference conference){

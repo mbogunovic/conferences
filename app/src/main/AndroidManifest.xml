@@ -13,7 +13,7 @@
             android:name=".activities.LoginActivity"
             android:label="@string/action_login"></activity>
         <activity
-            android:name=".activities.RegisterActivity">
+            android:name=".activities.RegisterActivity"
             android:label="@string/action_register"></activity>
 
         <activity

@@ -82,6 +82,11 @@ public class ConferencesProvider {
         return conference;
     }
 
+    public static void Delete(String id){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("conferences").child(id).removeValue();
+    }
+
     public static void GetById(String conferenceId, final Consumer<Conference> consumeResult) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 

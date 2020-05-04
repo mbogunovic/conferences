@@ -55,6 +55,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_ConferencesDetailsFragment_to_ConferenceEditFragment"
+            app:destination="@id/ConferenceEditFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/ConferenceAddFragment"
@@ -69,6 +76,22 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/ConferenceEditFragment"
+        android:name="com.conferences.fragments.ConferenceEditFragment"
+        android:label="Izmeni konferenciju"
+        tools:layout="@layout/conference_edit">
+        <action
+            android:id="@+id/action_ConferenceEditFragment_to_ConferenceDetailsFragment"
+            app:destination="@id/ConferenceDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="conferenceId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/EventAddFragment"

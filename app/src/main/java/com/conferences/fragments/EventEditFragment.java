@@ -1,5 +1,6 @@
 package com.conferences.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.conferences.R;
+import com.conferences.helpers.CalendarHelper;
 import com.conferences.helpers.EditTextHelper;
 import com.conferences.models.Event;
 import com.conferences.providers.EventsProvider;
@@ -53,6 +56,7 @@ public class EventEditFragment extends Fragment {
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setValues(Event event) {
         this.event = event;
         name.setText(event.getName());
@@ -68,7 +72,7 @@ public class EventEditFragment extends Fragment {
 
                     DialogFragment timePickerFragment = TimePickerFragment.newInstance(cStart).setOnDismiss((x) -> dtStart.clearFocus()).setOnTimeSet((c1) ->{
                         cStart = c1;
-                        dtStart.setText(SimpleDateFormat.getDateTimeInstance().format(cStart.getTime()));
+                        dtStart.setText(CalendarHelper.format(cStart.getTime()));
                         dtStart.clearFocus();
                         dtEnd.setError(null);
                     });
@@ -87,7 +91,7 @@ public class EventEditFragment extends Fragment {
 
                     DialogFragment timePickerFragment = TimePickerFragment.newInstance(cEnd).setOnDismiss((x) -> dtEnd.clearFocus()).setOnTimeSet((c1) ->{
                         cEnd = c1;
-                        dtEnd.setText(SimpleDateFormat.getDateTimeInstance().format(cEnd.getTime()));
+                        dtEnd.setText(CalendarHelper.format(cEnd.getTime()));
                         dtEnd.clearFocus();
                         dtEnd.setError(null);
                     });
@@ -99,6 +103,7 @@ public class EventEditFragment extends Fragment {
         });
     }
     
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

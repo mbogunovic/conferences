@@ -30,8 +30,7 @@ public class ConferenceDetailsFragment extends Fragment {
     private ListView listView;
     private ArrayList<String> delEvtList = new ArrayList<>();
 
-    private FloatingActionButton addButton;
-    private FloatingActionButton deleteButton;
+    private FloatingActionButton addButton, deleteButton, editButton;
     private FirebaseAuth mAuth;
 
     @Override
@@ -46,6 +45,7 @@ public class ConferenceDetailsFragment extends Fragment {
         description = root.findViewById(R.id.conference_details_description);
         addButton = root.findViewById(R.id.fab_event_add);
         deleteButton = root.findViewById(R.id.fab_event_delete);
+        editButton = root.findViewById(R.id.fab_event_edit);
         listView = root.findViewById(R.id.lv_events);
 
         if (getArguments() != null) {
@@ -60,6 +60,7 @@ public class ConferenceDetailsFragment extends Fragment {
 
         if (mAuth.getCurrentUser() == null) {
             addButton.hide();
+            editButton.hide();
         }
         deleteButton.hide();
 
@@ -76,6 +77,9 @@ public class ConferenceDetailsFragment extends Fragment {
 
         addButton.setOnClickListener(view12 -> NavHostFragment.findNavController(ConferenceDetailsFragment.this)
                 .navigate(ConferenceDetailsFragmentDirections.actionConferencesDetailsFragmentToEventAddFragment(conference.getId())));
+
+        editButton.setOnClickListener(view12 -> NavHostFragment.findNavController(ConferenceDetailsFragment.this)
+                .navigate(ConferenceDetailsFragmentDirections.actionConferencesDetailsFragmentToConferenceEditFragment(conference.getId())));
 
         deleteButton.setOnClickListener(view1 -> {
             delEvtList.forEach(x -> EventsProvider.Delete(x));

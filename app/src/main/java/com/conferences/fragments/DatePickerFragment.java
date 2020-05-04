@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
+import com.conferences.helpers.CalendarHelper;
 import com.conferences.helpers.StringHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.function.Consumer;
@@ -24,8 +24,9 @@ public class DatePickerFragment extends DialogFragment
     private Consumer dismissConsumer;
     private Calendar c;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     static public DatePickerFragment newInstance(Calendar calendar) {
-        return newInstance(SimpleDateFormat.getDateTimeInstance().format(calendar.getTime()));
+        return newInstance(CalendarHelper.format(calendar.getTime()));
     }
 
     static public DatePickerFragment newInstance(String calendarDate) {
@@ -36,17 +37,13 @@ public class DatePickerFragment extends DialogFragment
         return f;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         c = Calendar.getInstance();
         String strCalendar = getArguments() != null ? getArguments().getString("calendar") : null;
         if(!StringHelper.isNullOrWhitespace(strCalendar)){
-            try {
-                c.setTime(SimpleDateFormat.getDateTimeInstance().parse(strCalendar));
-            } catch (ParseException e) {
-                // parse exception skip
-            }
+            c = CalendarHelper.parse(strCalendar);
         }
 
         int year = c.get(Calendar.YEAR);
@@ -69,6 +66,8 @@ public class DatePickerFragment extends DialogFragment
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onDateSet(DatePicker view, int year, int month, int day) {
         c.set(year, month, day);
+        c.set(Calendar.SECOND, 0);
+
         calendarConsumer.accept(c);
     }
 

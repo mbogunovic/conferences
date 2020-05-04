@@ -12,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
+import com.conferences.helpers.CalendarHelper;
 import com.conferences.helpers.StringHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.function.Consumer;
+
+import static com.conferences.helpers.CalendarHelper.*;
 
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
@@ -29,21 +30,18 @@ public class TimePickerFragment extends DialogFragment
     static public TimePickerFragment newInstance(Calendar calendar) {
         TimePickerFragment f = new TimePickerFragment();
         Bundle args = new Bundle();
-        args.putString("calendar", SimpleDateFormat.getDateTimeInstance().format(calendar.getTime()));
+        args.putString("calendar", format(calendar.getTime()));
         f.setArguments(args);
         return f;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         c = Calendar.getInstance();
         String strCalendar = getArguments() != null ? getArguments().getString("calendar") : null;
         if(!StringHelper.isNullOrWhitespace(strCalendar)){
-            try {
-                c.setTime(SimpleDateFormat.getDateTimeInstance().parse(strCalendar));
-            } catch (ParseException e) {
-                // parse exception skip
-            }
+            c = parse(strCalendar);
         }
 
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -68,6 +66,7 @@ public class TimePickerFragment extends DialogFragment
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.SECOND, 0);
 
         calendarConsumer.accept(c);
     }

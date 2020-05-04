@@ -29,6 +29,7 @@
     <!-- Strings used for confirmation messages -->
     <string name="confirmation_conference_added">Konferencija je uspešno kreirana.</string>
     <string name="confirmation_conference_deleted">Izabrane konferencije su uspešno obrisane.</string>
+    <string name="confirmation_conference_edited">Konferencija je uspešno izmenjena.</string>
     <string name="confirmation_event_added">Događaj je uspešno kreiran.</string>
     <string name="confirmation_event_edited">Događaj je uspešno izmenjen.</string>
     <string name="confirmation_event_deleted">Izabrani događaji su uspešno obrisani.</string>

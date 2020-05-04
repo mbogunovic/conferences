@@ -29,8 +29,7 @@ public class EventsListAdapter extends ArrayAdapter<Event> {
     private Context context;
     private ArrayList<Event> events;
     private Fragment currentFragment;
-    private TextView name;
-    private TextView guests;
+    private TextView name, guests, start, end;
     private ArrayList<String> deleteEventList;
 
     public EventsListAdapter(Context context, ArrayList<Event> events, Fragment currentFragment, ArrayList<String> delEvtList) {
@@ -52,6 +51,10 @@ public class EventsListAdapter extends ArrayAdapter<Event> {
         name.setText(events.get(position).getName());
         guests = eventBlock.findViewById(R.id.cv_event_guests);
         guests.setText(events.get(position).getGuests());
+        start = eventBlock.findViewById(R.id.cv_event_start);
+        start.setText("Početak: " + events.get(position).getStart() + "h");
+        end = eventBlock.findViewById(R.id.cv_event_end);
+        end.setText("Kraj: " + events.get(position).getEnd() + "h");
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 

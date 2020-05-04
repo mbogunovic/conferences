@@ -106,4 +106,14 @@ public class ConferencesProvider {
                     }
                 });
     }
+
+    public static Conference EditConference(String id, String title, String description) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Conference conference = new Conference(title, description);
+        conference.setId(id);
+
+        mDatabase.child("conferences").child(conference.getId()).setValue(conference);
+
+        return conference;
+    }
 }

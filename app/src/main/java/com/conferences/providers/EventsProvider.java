@@ -27,9 +27,9 @@ public class EventsProvider {
         return event;
     }
 
-    public static Event EditEvent(String id, String name, String description, String start, String end, String conferenceId) {
+    public static Event EditEvent(String id, String name, String guests, String start, String end, String conferenceId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        Event event = new Event(name, description, start, end, conferenceId);
+        Event event = new Event(name, guests, start, end, conferenceId);
         event.setId(id);
 
         mDatabase.child("events").child(event.getId()).setValue(event);
@@ -37,8 +37,14 @@ public class EventsProvider {
         return event;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void Delete(String id){
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        EventsProvider.GetAllEventsBy(id, eventList -> {
+            eventList.forEach(x -> EventsProvider.Delete(x.getId()));
+        });
+
         mDatabase.child("events").child(id).removeValue();
     }
 

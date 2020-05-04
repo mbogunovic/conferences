@@ -51,6 +51,18 @@
                         android:layout_height="wrap_content"
                         android:textColor="#ffff"
                         android:textSize="14sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/cv_event_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffff"
+                        android:textSize="14sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/cv_event_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffff"
+                        android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

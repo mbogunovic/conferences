@@ -1,12 +1,12 @@
 package com.conferences.helpers;
 
+import android.os.Build;
 import android.view.View;
 import android.widget.EditText;
 
-import com.conferences.R;
+import androidx.annotation.RequiresApi;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.conferences.R;
 
 public class EditTextHelper {
     public static boolean CheckMandatoryText(EditText et, View view){
@@ -22,14 +22,11 @@ public class EditTextHelper {
         return !isTextInvalid;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static boolean CheckDateText(EditText et, View view){
         boolean isTextInvalid = false;
 
-        try {
-            SimpleDateFormat.getDateTimeInstance().parse(et.getText().toString());
-        } catch (ParseException e) {
-            isTextInvalid = true;
-        }
+        isTextInvalid = CalendarHelper.parse(et.getText().toString()) == null;
 
         if(isTextInvalid){
             et.setError(view.getResources().getString(R.string.validation_date));
